@@ -43,8 +43,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
+const apiRouter = express.Router();
+
 // ─── Health Check ───
-app.get('/api/health', (_req, res) => {
+apiRouter.get('/health', (_req, res) => {
   res.json({
     status: 'ok',
     database: hasDatabase ? 'configured' : 'memory_fallback',
@@ -53,7 +55,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 // ─── Applications (Recruitment Form) ───
-app.post('/api/applications', async (req, res) => {
+apiRouter.post('/applications', async (req, res) => {
   try {
     const { fullName, email, rollNo, year, domain, secondaryDomain, portfolio, motivation } = req.body;
 
@@ -110,7 +112,7 @@ app.post('/api/applications', async (req, res) => {
   }
 });
 
-app.get('/api/applications', async (_req, res) => {
+apiRouter.get('/applications', async (_req, res) => {
   try {
     if (hasDatabase) {
       try {
@@ -130,7 +132,7 @@ app.get('/api/applications', async (_req, res) => {
 });
 
 // ─── Event Registrations ───
-app.post('/api/event-registrations', async (req, res) => {
+apiRouter.post('/event-registrations', async (req, res) => {
   try {
     const { fullName, email, rollNo, year, eventName, domain, secondaryDomain, portfolio, message } = req.body;
 
@@ -186,7 +188,7 @@ app.post('/api/event-registrations', async (req, res) => {
   }
 });
 
-app.get('/api/event-registrations', async (_req, res) => {
+apiRouter.get('/event-registrations', async (_req, res) => {
   try {
     if (hasDatabase) {
       try {
@@ -206,7 +208,7 @@ app.get('/api/event-registrations', async (_req, res) => {
 });
 
 // ─── Contact Submissions ───
-app.post('/api/contact', async (req, res) => {
+apiRouter.post('/contact', async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
@@ -246,7 +248,7 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-app.get('/api/contact', async (_req, res) => {
+apiRouter.get('/contact', async (_req, res) => {
   try {
     if (hasDatabase) {
       try {
@@ -264,6 +266,10 @@ app.get('/api/contact', async (_req, res) => {
     res.status(500).json({ error: 'Failed to fetch contact submissions' });
   }
 });
+
+// Mount API router for both direct service routing and path-prefixed routing
+app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 // ─── Start Server ───
 if (!process.env.VERCEL) {
