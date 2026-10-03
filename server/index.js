@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import prisma from './lib/prisma.js';
@@ -10,8 +11,9 @@ const memoryApplications = [];
 const memoryEventRegistrations = [];
 const memoryContactSubmissions = [];
 
-// Helper to determine if Prisma PostgreSQL is ready
+// Helper to determine if Prisma PostgreSQL is configured
 const hasDatabase = Boolean(process.env.DATABASE_URL);
+
 
 // ─── Middleware ───
 app.use(cors({
@@ -265,10 +267,20 @@ app.get('/api/contact', async (_req, res) => {
 
 // ─── Start Server ───
 if (!process.env.VERCEL) {
-  app.listen(PORT, () => {
+  app.listen(PORT, async () => {
     console.log(`🌉 SETU API server running at http://localhost:${PORT}`);
-    if (!hasDatabase) {
-      console.log('ℹ️  Note: DATABASE_URL not set in environment. Submissions will be stored in-memory for testing.');
+    if (hasDatabase) {
+      try {
+        await prisma.$connect();
+        console.log('✅ PostgreSQL connected successfully via Prisma');
+      } catch (err) {
+        console.error('❌ Failed to connect to PostgreSQL database via DATABASE_URL:');
+        console.error('   ', err.message);
+        console.warn('⚠️  Submissions will temporarily fall back to in-memory store until DATABASE_URL is valid.');
+      }
+    } else {
+      console.log('ℹ️  Note: DATABASE_URL not set in server/.env. Submissions will be stored in-memory for testing.');
+      console.log('👉 To persist to PostgreSQL, add DATABASE_URL in server/.env and run: npx prisma db push');
     }
   });
 }
