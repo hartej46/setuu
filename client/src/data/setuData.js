@@ -186,7 +186,7 @@ export const TEAM_MEMBERS = [
     name: 'Ishita Chaurasiya',
     role: 'Vice President',
     category: 'Core',
-    domain: 'Operations',
+    domain: 'Vice President',
     bio: 'Electronics & Comm ’27. Dedicated to scaling club infrastructure, student mentorship, and cross-domain product sprints.',
     image: '/team/ishita-chaurasiya.jpg',
     imagePosition: 'center 30%',
