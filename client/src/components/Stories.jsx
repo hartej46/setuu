@@ -7,7 +7,7 @@ export default function Stories() {
   const [activeTag, setActiveTag] = useState('All');
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  const tags = ['All', 'Hackathons', 'Workshops', 'Team', 'Events', 'Celebrations', 'Behind The Scenes'];
+  const tags = ['All', ...new Set(STORIES_GALLERY.map((s) => s.category))];
 
   const filteredStories =
     activeTag === 'All'
@@ -70,8 +70,8 @@ export default function Stories() {
           </div>
         </div>
 
-        {/* Masonry / Dynamic Grid */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Dynamic Grid for 4 Stories */}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredStories.map((story, idx) => (
             <motion.div
               key={story.id}
@@ -83,36 +83,48 @@ export default function Stories() {
               className="group relative rounded-3xl overflow-hidden bg-white border border-slate-200/90 hover:border-[#20A2B1] cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
             >
               <div className="relative h-72 sm:h-80 w-full overflow-hidden">
-                <img
-                  src={story.image}
-                  alt={story.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
+                {story.image ? (
+                  <img
+                    src={story.image}
+                    alt={story.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-[#173F5F] via-[#1B5784] to-[#20A2B1] flex flex-col items-center justify-center relative overflow-hidden p-6 text-center select-none">
+                    <div className="absolute inset-0 bg-grid-light opacity-25 pointer-events-none" />
+                    <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white mb-2 shadow-inner group-hover:scale-110 transition-transform">
+                      <Sparkles className="w-7 h-7 text-[#E6972B]" />
+                    </div>
+                    <span className="text-[11px] uppercase font-extrabold tracking-widest text-cyan-200">
+                      Hackathon Edition
+                    </span>
+                  </div>
+                )}
 
                 {/* Dark Vignette Overlay for Text Legibility */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent group-hover:opacity-90 transition-opacity" />
 
                 {/* Top Badge */}
                 <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#173F5F] shadow-sm">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[#173F5F] dark:text-[#38BDF8] border border-transparent dark:border-cyan-500/30 shadow-sm">
                     {story.category}
                   </span>
                 </div>
 
                 {/* Zoom Icon Button */}
-                <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 flex items-center justify-center text-[#173F5F] opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
+                <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-700 flex items-center justify-center text-[#173F5F] dark:text-[#38BDF8] opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
                   <Maximize2 className="w-3.5 h-3.5" />
                 </div>
 
                 {/* Caption Card at Bottom */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+                <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
                   <div className="flex items-center gap-2 text-[11px] text-[#20A2B1] font-mono mb-1 font-semibold">
                     <Calendar className="w-3 h-3" />
                     <span>{story.date}</span>
                   </div>
 
-                  <h3 className="text-lg font-bold font-['Outfit'] text-white group-hover:text-cyan-200 transition-colors">
+                  <h3 className="text-base sm:text-lg font-bold font-['Outfit'] text-white group-hover:text-cyan-200 transition-colors line-clamp-1">
                     {story.title}
                   </h3>
 
@@ -145,11 +157,22 @@ export default function Stories() {
               </button>
 
               <div className="relative aspect-video sm:aspect-[16/10] bg-black">
-                <img
-                  src={selectedPhoto.image}
-                  alt={selectedPhoto.title}
-                  className="w-full h-full object-cover"
-                />
+                {selectedPhoto.image ? (
+                  <img
+                    src={selectedPhoto.image}
+                    alt={selectedPhoto.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-[#173F5F] via-[#1B5784] to-[#20A2B1] flex flex-col items-center justify-center p-8 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white mb-3 shadow-inner">
+                      <Sparkles className="w-8 h-8 text-[#E6972B]" />
+                    </div>
+                    <span className="text-xs uppercase font-extrabold tracking-widest text-cyan-200">
+                      Hackathon Edition
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="p-6 sm:p-8 space-y-2">

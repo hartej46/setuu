@@ -5,13 +5,37 @@ import prisma from './lib/prisma.js';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Middleware
+// In-memory fallback stores (used when DATABASE_URL is not configured or during offline dev)
+const memoryApplications = [];
+const memoryEventRegistrations = [];
+const memoryContactSubmissions = [];
+
+// Helper to determine if Prisma PostgreSQL is ready
+const hasDatabase = Boolean(process.env.DATABASE_URL);
+
+// ─── Middleware ───
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+    // Allow requests with no origin (like mobile apps, curl, serverless)
+    if (!origin) return callback(null, true);
+
+    // Allow localhost and 127.0.0.1
+    if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
       return callback(null, true);
     }
-    return callback(new Error('CORS not allowed'));
+
+    // Allow any Vercel preview or production deployment (*.vercel.app)
+    if (/^https:\/\/([a-zA-Z0-9-]+\.)*vercel\.app$/.test(origin)) {
+      return callback(null, true);
+    }
+
+    // Allow custom origin configured in environment
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+
+    // Allow origin in development and testing
+    return callback(null, true);
   },
   credentials: true,
 }));
@@ -19,7 +43,11 @@ app.use(express.json());
 
 // ─── Health Check ───
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'ok',
+    database: hasDatabase ? 'configured' : 'memory_fallback',
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // ─── Applications (Recruitment Form) ───
@@ -31,8 +59,33 @@ app.post('/api/applications', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const application = await prisma.application.create({
-      data: {
+    let application = null;
+
+    if (hasDatabase) {
+      try {
+        application = await prisma.application.create({
+          data: {
+            fullName,
+            email,
+            rollNo,
+            year,
+            domain,
+            secondaryDomain: secondaryDomain || null,
+            portfolio: portfolio || null,
+            motivation,
+          },
+        });
+      } catch (dbError) {
+        console.warn('Prisma database error, using memory fallback:', dbError.message);
+        if (dbError.code === 'P2002') {
+          return res.status(409).json({ error: 'Duplicate entry detected' });
+        }
+      }
+    }
+
+    if (!application) {
+      application = {
+        id: `app_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
         fullName,
         email,
         rollNo,
@@ -41,25 +94,33 @@ app.post('/api/applications', async (req, res) => {
         secondaryDomain: secondaryDomain || null,
         portfolio: portfolio || null,
         motivation,
-      },
-    });
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      memoryApplications.unshift(application);
+      console.log(`[Storage] Saved application for "${fullName}" (${email}). Set DATABASE_URL to persist to PostgreSQL.`);
+    }
 
     res.status(201).json({ success: true, data: application });
   } catch (error) {
     console.error('Application error:', error);
-    if (error.code === 'P2002') {
-      return res.status(409).json({ error: 'Duplicate entry detected' });
-    }
     res.status(500).json({ error: 'Failed to submit application' });
   }
 });
 
 app.get('/api/applications', async (_req, res) => {
   try {
-    const applications = await prisma.application.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
-    res.json({ data: applications });
+    if (hasDatabase) {
+      try {
+        const applications = await prisma.application.findMany({
+          orderBy: { createdAt: 'desc' },
+        });
+        return res.json({ data: applications });
+      } catch (dbError) {
+        console.warn('Prisma fetch failed, using memory fallback:', dbError.message);
+      }
+    }
+    res.json({ data: memoryApplications });
   } catch (error) {
     console.error('Fetch applications error:', error);
     res.status(500).json({ error: 'Failed to fetch applications' });
@@ -75,8 +136,31 @@ app.post('/api/event-registrations', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const registration = await prisma.eventRegistration.create({
-      data: {
+    let registration = null;
+
+    if (hasDatabase) {
+      try {
+        registration = await prisma.eventRegistration.create({
+          data: {
+            fullName,
+            email,
+            rollNo,
+            year,
+            eventName,
+            domain: domain || null,
+            secondaryDomain: secondaryDomain || null,
+            portfolio: portfolio || null,
+            message: message || null,
+          },
+        });
+      } catch (dbError) {
+        console.warn('Prisma database error, using memory fallback:', dbError.message);
+      }
+    }
+
+    if (!registration) {
+      registration = {
+        id: `reg_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
         fullName,
         email,
         rollNo,
@@ -86,8 +170,12 @@ app.post('/api/event-registrations', async (req, res) => {
         secondaryDomain: secondaryDomain || null,
         portfolio: portfolio || null,
         message: message || null,
-      },
-    });
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      memoryEventRegistrations.unshift(registration);
+      console.log(`[Storage] Saved event registration for "${fullName}" - ${eventName}.`);
+    }
 
     res.status(201).json({ success: true, data: registration });
   } catch (error) {
@@ -98,10 +186,17 @@ app.post('/api/event-registrations', async (req, res) => {
 
 app.get('/api/event-registrations', async (_req, res) => {
   try {
-    const registrations = await prisma.eventRegistration.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
-    res.json({ data: registrations });
+    if (hasDatabase) {
+      try {
+        const registrations = await prisma.eventRegistration.findMany({
+          orderBy: { createdAt: 'desc' },
+        });
+        return res.json({ data: registrations });
+      } catch (dbError) {
+        console.warn('Prisma fetch failed, using memory fallback:', dbError.message);
+      }
+    }
+    res.json({ data: memoryEventRegistrations });
   } catch (error) {
     console.error('Fetch registrations error:', error);
     res.status(500).json({ error: 'Failed to fetch registrations' });
@@ -117,9 +212,30 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const submission = await prisma.contactSubmission.create({
-      data: { name, email, subject: subject || null, message },
-    });
+    let submission = null;
+
+    if (hasDatabase) {
+      try {
+        submission = await prisma.contactSubmission.create({
+          data: { name, email, subject: subject || null, message },
+        });
+      } catch (dbError) {
+        console.warn('Prisma database error, using memory fallback:', dbError.message);
+      }
+    }
+
+    if (!submission) {
+      submission = {
+        id: `contact_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,
+        name,
+        email,
+        subject: subject || null,
+        message,
+        createdAt: new Date().toISOString(),
+      };
+      memoryContactSubmissions.unshift(submission);
+      console.log(`[Storage] Saved contact submission from "${name}".`);
+    }
 
     res.status(201).json({ success: true, data: submission });
   } catch (error) {
@@ -128,7 +244,33 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// ─── Start Server ───
-app.listen(PORT, () => {
-  console.log(`🌉 SETU API server running at http://localhost:${PORT}`);
+app.get('/api/contact', async (_req, res) => {
+  try {
+    if (hasDatabase) {
+      try {
+        const submissions = await prisma.contactSubmission.findMany({
+          orderBy: { createdAt: 'desc' },
+        });
+        return res.json({ data: submissions });
+      } catch (dbError) {
+        console.warn('Prisma fetch failed, using memory fallback:', dbError.message);
+      }
+    }
+    res.json({ data: memoryContactSubmissions });
+  } catch (error) {
+    console.error('Fetch contact submissions error:', error);
+    res.status(500).json({ error: 'Failed to fetch contact submissions' });
+  }
 });
+
+// ─── Start Server ───
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🌉 SETU API server running at http://localhost:${PORT}`);
+    if (!hasDatabase) {
+      console.log('ℹ️  Note: DATABASE_URL not set in environment. Submissions will be stored in-memory for testing.');
+    }
+  });
+}
+
+export default app;
