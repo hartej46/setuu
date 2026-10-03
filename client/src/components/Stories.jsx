@@ -95,13 +95,13 @@ export default function Stories() {
 
                 {/* Top Badge */}
                 <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#173F5F] shadow-sm">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[#173F5F] dark:text-[#38BDF8] border border-transparent dark:border-cyan-500/30 shadow-sm">
                     {story.category}
                   </span>
                 </div>
 
                 {/* Zoom Icon Button */}
-                <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 flex items-center justify-center text-[#173F5F] opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
+                <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-700 flex items-center justify-center text-[#173F5F] dark:text-[#38BDF8] opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
                   <Maximize2 className="w-3.5 h-3.5" />
                 </div>
 

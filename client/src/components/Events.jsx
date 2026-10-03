@@ -260,7 +260,7 @@ export default function Events({ onRegisterEvent }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {PAST_EVENTS.map((event, idx) => (
               <motion.div
                 key={event.id}
@@ -272,14 +272,26 @@ export default function Events({ onRegisterEvent }) {
               >
                 <div>
                   <div className="relative h-52 overflow-hidden">
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <span className="absolute bottom-2.5 left-3 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-white/90 text-[#173F5F]">
+                    {event.image ? (
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#173F5F] via-[#1B5784] to-[#20A2B1] flex flex-col items-center justify-center relative overflow-hidden p-6 text-center select-none">
+                        <div className="absolute inset-0 bg-grid-light opacity-25 pointer-events-none" />
+                        <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white mb-2 shadow-inner group-hover:scale-110 transition-transform">
+                          <Sparkles className="w-7 h-7 text-[#E6972B]" />
+                        </div>
+                        <span className="text-[11px] uppercase font-extrabold tracking-widest text-cyan-200">
+                          Hackathon Edition
+                        </span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <span className="absolute bottom-2.5 left-3 px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-white/95 dark:bg-slate-900/95 text-[#173F5F] dark:text-[#38BDF8] border border-transparent dark:border-cyan-500/30 backdrop-blur-sm shadow-xs">
                       {event.date}
                     </span>
                   </div>
@@ -304,7 +316,7 @@ export default function Events({ onRegisterEvent }) {
                   {event.tags.map((t) => (
                     <span
                       key={t}
-                      className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600"
+                      className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-transparent dark:border-slate-700/60"
                     >
                       #{t}
                     </span>

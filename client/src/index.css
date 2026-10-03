@@ -227,6 +227,31 @@ html.dark .bg-\[\#20A2B1\]\/10 {
   color: #20A2B1 !important;
 }
 
+/* Image overlay tags and pills in Dark Mode */
+html.dark span[class*="bg-white"],
+html.dark span.bg-white\/90,
+html.dark span.bg-white\/95,
+html.dark .bg-white\/90,
+html.dark .bg-white\/95 {
+  background-color: rgba(15, 23, 42, 0.94) !important;
+  color: #38BDF8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+}
+
+html.dark span[class*="bg-white"] *,
+html.dark span.bg-white\/90 *,
+html.dark span.bg-white\/95 * {
+  color: #38BDF8 !important;
+}
+
+html.dark a[class*="bg-white"],
+html.dark div[class*="bg-white\/90"],
+html.dark div[class*="bg-white\/95"] {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  color: #E2E8F0 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
 /* Filter buttons (Stories, Team, Domains) */
 html.dark button.bg-slate-100,
 html.dark button.bg-white {

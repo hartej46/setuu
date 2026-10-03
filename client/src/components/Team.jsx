@@ -116,7 +116,7 @@ export default function Team() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
 
                   {/* Domain Tag */}
-                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#173F5F] shadow-xs">
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[#173F5F] dark:text-[#38BDF8] border border-transparent dark:border-cyan-500/30 shadow-xs">
                     {member.domain}
                   </span>
 
@@ -127,7 +127,7 @@ export default function Team() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={`${member.name} LinkedIn`}
-                      className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 text-[#173F5F] flex items-center justify-center hover:bg-[#20A2B1] hover:text-white transition-all shadow-sm"
+                      className="w-8 h-8 rounded-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-700 text-[#173F5F] dark:text-slate-200 flex items-center justify-center hover:bg-[#20A2B1] hover:text-white dark:hover:bg-[#20A2B1] dark:hover:text-white transition-all shadow-sm"
                     >
                       <LinkedinIcon className="w-4 h-4" />
                     </a>
@@ -136,7 +136,7 @@ export default function Team() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={`${member.name} GitHub`}
-                      className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 text-[#173F5F] flex items-center justify-center hover:bg-[#173F5F] hover:text-white transition-all shadow-sm"
+                      className="w-8 h-8 rounded-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-700 text-[#173F5F] dark:text-slate-200 flex items-center justify-center hover:bg-[#173F5F] hover:text-white dark:hover:bg-[#20A2B1] dark:hover:text-white transition-all shadow-sm"
                     >
                       <GithubIcon className="w-4 h-4" />
                     </a>
@@ -145,7 +145,7 @@ export default function Team() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={`${member.name} Twitter`}
-                      className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 text-[#173F5F] flex items-center justify-center hover:bg-[#E6972B] hover:text-white transition-all shadow-sm"
+                      className="w-8 h-8 rounded-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-700 text-[#173F5F] dark:text-slate-200 flex items-center justify-center hover:bg-[#E6972B] hover:text-white dark:hover:bg-[#20A2B1] dark:hover:text-white transition-all shadow-sm"
                     >
                       <TwitterIcon className="w-4 h-4" />
                     </a>

@@ -153,6 +153,16 @@ export const PAST_EVENTS = [
     image: '/events/setu-aiesec.jpg',
     tags: ['AIESEC', 'Youth Leadership', 'Community Impact'],
   },
+  {
+    id: 'impact-india-hackathon',
+    title: 'Impact India Hackathon',
+    date: 'Hackathon',
+    attendees: '250+ Participants',
+    summary:
+      'We hosted the Impact India Hackathon—a high-energy celebration of innovation, creativity, and teamwork! From bold ideas to powerful solutions, participants turned technology into action and created an experience full of excitement, learning, and impact.',
+    image: null,
+    tags: ['Hackathon', 'Innovation', 'Creativity', 'Teamwork'],
+  },
 ];
 
 
