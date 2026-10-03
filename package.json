@@ -2,10 +2,18 @@
   "name": "setu-app",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
+    "postinstall": "prisma generate",
     "dev:client": "npm --prefix client run dev",
     "dev:server": "npm --prefix server run dev",
-    "build": "cd client && npm install && npm run build",
+    "build": "prisma generate && cd client && npm install && npm run build",
     "start": "npm --prefix server run start"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.3"
   }
 }
