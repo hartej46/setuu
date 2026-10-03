@@ -111,102 +111,264 @@
 }
 
 /* ═══════════════════════════════════════════════
-   DARK MODE
-   Uses element-level selectors (not Tailwind class 
-   selectors) to avoid Lightning CSS parsing issues.
+   PREMIUM DARK MODE DESIGN SYSTEM
    ═══════════════════════════════════════════════ */
 
 html.dark {
   color-scheme: dark;
 }
 
-html.dark body {
-  background-color: #06080d;
-  color: #E2E8F0;
+html.dark body,
+html.dark div[class*="min-h-screen"],
+html.dark .min-h-screen {
+  background-color: #080D1A !important;
+  color: #F8FAFC !important;
 }
 
-/* Dark: Navbar & Header */
+/* Base Sections */
+html.dark section {
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Headers & Sticky Navigation */
 html.dark header {
-  background-color: rgba(6, 8, 13, 0.92) !important;
-  border-bottom-color: rgba(30, 41, 59, 0.9) !important;
+  background-color: rgba(8, 13, 26, 0.88) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 html.dark nav {
-  background-color: rgba(15, 19, 25, 0.85) !important;
-  border-color: #1e293b !important;
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Dark: Sections */
-html.dark section {
-  background-color: #06080d !important;
-}
-
-/* Dark: Cards, divs with white/light backgrounds */
-html.dark .light-card {
-  background: #0f1319;
-  border-color: #1e293b;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
-}
-
-html.dark .light-glass-nav {
-  background: rgba(6, 8, 13, 0.92);
-  border-bottom-color: rgba(30, 41, 59, 0.9);
-}
-
-/* Dark: Footer */
-html.dark footer {
-  background-color: #0f1319 !important;
-  border-color: #1e293b !important;
+html.dark nav a {
   color: #94A3B8 !important;
 }
 
-/* Dark: Form Inputs */
+html.dark nav a:hover {
+  color: #20A2B1 !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+html.dark nav a.text-\[\#20A2B1\] {
+  color: #20A2B1 !important;
+  background-color: rgba(32, 162, 177, 0.15) !important;
+}
+
+/* SETU Logo in Dark Mode */
+html.dark header svg path[fill="#173F5F"],
+html.dark footer svg path[fill="#173F5F"] {
+  fill: #38BDF8 !important;
+}
+
+html.dark header svg path[fill="#11324E"],
+html.dark footer svg path[fill="#11324E"] {
+  fill: #0284C7 !important;
+}
+
+html.dark .font-serif.text-\[\#173F5F\] {
+  color: #F8FAFC !important;
+}
+
+/* Cards & Surface Containers */
+html.dark .bg-white,
+html.dark .bg-\[\#FFFFFF\],
+html.dark .bg-\[\#FAFCFE\],
+html.dark .light-card {
+  background-color: #0F172A !important;
+  border-color: rgba(255, 255, 255, 0.09) !important;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-100 {
+  background-color: #1E293B !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #CBD5E1 !important;
+}
+
+/* Dark Mode Typography & Headings */
+html.dark .text-\[\#173F5F\],
+html.dark .text-\[\#1E293B\],
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+  color: #F8FAFC !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #94A3B8 !important;
+}
+
+html.dark .text-slate-500 {
+  color: #64748B !important;
+}
+
+html.dark .text-slate-400 {
+  color: #94A3B8 !important;
+}
+
+/* Keep accent colors bright and glowing */
+html.dark .text-\[\#20A2B1\] {
+  color: #20A2B1 !important;
+}
+
+html.dark .text-\[\#E6972B\] {
+  color: #F59E0B !important;
+}
+
+/* Badges & Section Pills */
+html.dark .bg-\[\#173F5F\]\/8,
+html.dark .bg-\[\#173F5F\]\/10,
+html.dark .bg-\[\#20A2B1\]\/10 {
+  background-color: rgba(32, 162, 177, 0.15) !important;
+  border-color: rgba(32, 162, 177, 0.35) !important;
+  color: #20A2B1 !important;
+}
+
+/* Filter buttons (Stories, Team, Domains) */
+html.dark button.bg-slate-100,
+html.dark button.bg-white {
+  background-color: #1E293B !important;
+  color: #94A3B8 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark button.bg-slate-100:hover,
+html.dark button.bg-white:hover {
+  background-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+html.dark button.bg-\[\#173F5F\] {
+  background-color: #20A2B1 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(32, 162, 177, 0.35) !important;
+}
+
+/* Domain Tinted Cards in Dark Mode */
+html.dark .bg-\[\#F0FDFD\] { background-color: rgba(32, 162, 177, 0.08) !important; }
+html.dark .bg-\[\#F5F3FF\] { background-color: rgba(139, 92, 246, 0.08) !important; }
+html.dark .bg-\[\#FFFBEB\] { background-color: rgba(230, 151, 43, 0.08) !important; }
+html.dark .bg-\[\#ECFDF5\] { background-color: rgba(16, 185, 129, 0.08) !important; }
+html.dark .bg-\[\#FFF1F2\] { background-color: rgba(244, 63, 94, 0.08) !important; }
+html.dark .bg-\[\#EFF6FF\] { background-color: rgba(23, 63, 95, 0.25) !important; }
+
+/* Interactive Hover Borders */
+html.dark .hover\:border-\[\#20A2B1\]:hover {
+  border-color: #20A2B1 !important;
+  box-shadow: 0 8px 30px -4px rgba(32, 162, 177, 0.2) !important;
+}
+
+html.dark .hover\:border-\[\#E6972B\]:hover {
+  border-color: #E6972B !important;
+  box-shadow: 0 8px 30px -4px rgba(230, 151, 43, 0.2) !important;
+}
+
+/* Subtle Card Divider Lines */
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-200\/80,
+html.dark .border-slate-200\/90 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Application Modal & Form in Dark Mode */
+html.dark .fixed.inset-0 .bg-white {
+  background-color: #0F172A !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+}
+
 html.dark input,
 html.dark select,
 html.dark textarea {
-  background-color: #141a24 !important;
-  border-color: #1e293b !important;
-  color: #E2E8F0 !important;
+  background-color: #1E293B !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #F8FAFC !important;
 }
 
 html.dark input::placeholder,
 html.dark textarea::placeholder {
-  color: #475569 !important;
+  color: #64748B !important;
 }
 
 html.dark input:focus,
 html.dark select:focus,
 html.dark textarea:focus {
   border-color: #20A2B1 !important;
+  background-color: #1E293B !important;
+  outline: none !important;
 }
 
-/* Dark: Scrollbar */
+/* Domain selector buttons inside modal */
+html.dark .fixed.inset-0 button.bg-slate-50 {
+  background-color: #1E293B !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #CBD5E1 !important;
+}
+
+html.dark .fixed.inset-0 button.bg-\[\#20A2B1\]\/15 {
+  background-color: rgba(32, 162, 177, 0.25) !important;
+  border-color: #20A2B1 !important;
+  color: #38BDF8 !important;
+}
+
+html.dark .fixed.inset-0 button.bg-\[\#E6972B\]\/15 {
+  background-color: rgba(230, 151, 43, 0.25) !important;
+  border-color: #E6972B !important;
+  color: #FBBF24 !important;
+}
+
+/* Footer in Dark Mode */
+html.dark footer {
+  background-color: #050811 !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  color: #94A3B8 !important;
+}
+
+html.dark footer a {
+  color: #94A3B8 !important;
+}
+
+html.dark footer a:hover {
+  color: #20A2B1 !important;
+}
+
+html.dark footer .bg-slate-50 {
+  background-color: #0F172A !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #94A3B8 !important;
+}
+
+html.dark footer .bg-slate-50:hover {
+  border-color: #20A2B1 !important;
+  background-color: rgba(32, 162, 177, 0.15) !important;
+  color: #20A2B1 !important;
+}
+
+html.dark footer button.bg-slate-100 {
+  background-color: #0F172A !important;
+  color: #20A2B1 !important;
+}
+
+/* Scrollbar in Dark Mode */
 html.dark ::-webkit-scrollbar-track {
-  background: #0f1319;
+  background: #080D1A;
 }
 
 html.dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #1E293B;
 }
 
 html.dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #334155;
 }
 
-/* Dark: Text gradient adaptation */
+/* Text Gradients in Dark Mode */
 html.dark .text-gradient-setu {
-  background: linear-gradient(135deg, #5BB8C4 0%, #20A2B1 100%);
+  background: linear-gradient(135deg, #38BDF8 0%, #20A2B1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-/* Dark: Background dots/grid */
-html.dark .bg-grid-light {
-  background-image: 
-    linear-gradient(to right, rgba(32, 162, 177, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(32, 162, 177, 0.06) 1px, transparent 1px);
-}
-
-html.dark .bg-dots-light {
-  background-image: radial-gradient(rgba(32, 162, 177, 0.1) 1.2px, transparent 1.2px);
 }
