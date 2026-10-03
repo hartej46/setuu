@@ -109,6 +109,7 @@ export default function Team() {
                   <img
                     src={member.image}
                     alt={member.name}
+                    style={{ objectPosition: member.imagePosition || 'center' }}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
