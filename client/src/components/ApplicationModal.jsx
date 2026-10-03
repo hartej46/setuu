@@ -63,26 +63,34 @@ export default function ApplicationModal({ isOpen, onClose, initialDomain = 'tec
         };
 
     try {
-      // First try relative path (proxied by Vite in dev), fallback to direct backend url
+      const baseApi = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+      const primaryUrl = `${baseApi}${path}`;
+
       let response;
       try {
-        response = await fetch(path, {
+        response = await fetch(primaryUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-      } catch {
-        // Fallback to direct backend port 4000
-        response = await fetch(`http://localhost:4000${path}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
+      } catch (fetchErr) {
+        // Fallback for local development if direct proxy is unreachable
+        const isLocal = typeof window !== 'undefined' &&
+          (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+        if (isLocal && !baseApi) {
+          response = await fetch(`http://localhost:4000${path}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+        } else {
+          throw fetchErr;
+        }
       }
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Submission failed. Please try again.');
+        throw new Error(errorData.error || `Submission failed (${response.status}). Please try again.`);
       }
 
       setLoading(false);
