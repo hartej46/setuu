@@ -102,48 +102,24 @@ export const DOMAINS = [
 ];
 
 export const UPCOMING_EVENTS = [
+  // Add your customized events here!
+  // Example structure:
+  /*
   {
-    id: 'recruitment-2026',
-    featured: true,
-    title: 'SETU RECRUITMENT 2026',
-    tagline: 'Find your domain. Solve real problems with technology.',
-    description: 'Join the premier problem-solving tech community on campus. Whether you write code, design interfaces, strategize outreach, or lead operations, SETU is your bridge to build real-world products.',
-    date: 'OCTOBER 12 - 15, 2026',
-    time: 'TBD',
-    location: 'TBD',
+    id: 'custom-event-1',
+    featured: true, // true for the main highlight banner, false for grid cards
+    title: 'Your Event Title',
+    tagline: 'Your catchy event tagline',
+    description: 'Detailed description of what will happen at the event.',
+    date: 'NOVEMBER 15, 2026',
+    time: '2:00 PM IST',
+    location: 'Campus Auditorium / Lab 3',
     status: 'Applications Open',
-    badge: 'Flagship Event',
-    tags: ['All Batches Welcome', 'Cross-Domain', 'Zero Experience Required'],
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200&auto=format&fit=crop',
-  },
-  {
-    id: 'bridge-hack',
-    featured: false,
-    title: 'BridgeHack 2026: Campus Problem Solver Jam',
-    tagline: '24 hours of nonstop building solutions for campus challenges.',
-    description: 'Teams build functional software tackling student productivity, lab equipment booking, and campus sustainability with alumni tech mentors.',
-    date: 'NOVEMBER 07 - 08, 2026',
-    time: '10:00 AM (24 Hours)',
-    location: 'Central Computing Complex, Lab 4',
-    status: 'Registration Starting Soon',
-    badge: 'Hackathon',
-    tags: ['Tech & Design', 'Cash Prizes ₹50k+'],
+    badge: 'Workshop',
+    tags: ['Tech & Design', 'Hands-on'],
     image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop',
   },
-  {
-    id: 'design-sprint',
-    featured: false,
-    title: 'DesignSprint 1.0: Tech Product Prototyping',
-    tagline: 'Transform problem statements into intuitive Figma interfaces.',
-    description: 'Learn rapid wireframing, user journey mapping, and developer handoff from SETU design leads to build tech people love using.',
-    date: 'NOVEMBER 22, 2026',
-    time: '2:30 PM - 5:30 PM IST',
-    location: 'Design Studio 201',
-    status: 'Seats Limited (60 Seats)',
-    badge: 'Workshop',
-    tags: ['UI/UX', 'Figma', 'Interactive'],
-    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop',
-  },
+  */
 ];
 
 export const PAST_EVENTS = [
