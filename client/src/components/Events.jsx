@@ -260,7 +260,7 @@ export default function Events({ onRegisterEvent }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PAST_EVENTS.map((event, idx) => (
               <motion.div
                 key={event.id}
@@ -271,7 +271,7 @@ export default function Events({ onRegisterEvent }) {
                 className="group rounded-3xl bg-white border border-slate-200/90 overflow-hidden hover:border-[#20A2B1] hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="relative h-44 overflow-hidden">
+                  <div className="relative h-52 overflow-hidden">
                     <img
                       src={event.image}
                       alt={event.title}
@@ -290,11 +290,11 @@ export default function Events({ onRegisterEvent }) {
                       <span>{event.attendees}</span>
                     </div>
 
-                    <h4 className="text-base font-bold text-[#173F5F] font-['Outfit'] group-hover:text-[#20A2B1] transition-colors">
+                    <h4 className="text-lg font-bold text-[#173F5F] font-['Outfit'] group-hover:text-[#20A2B1] transition-colors">
                       {event.title}
                     </h4>
 
-                    <p className="mt-2 text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                    <p className="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-4 leading-relaxed">
                       {event.summary}
                     </p>
                   </div>
