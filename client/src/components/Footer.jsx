@@ -57,7 +57,7 @@ export default function Footer() {
 
             <div className="flex items-center gap-3">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/setu_nst/"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="SETU Instagram"
@@ -67,7 +67,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/setu-nst/home/"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="SETU LinkedIn"
