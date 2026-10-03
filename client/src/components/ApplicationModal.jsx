@@ -221,10 +221,9 @@ export default function ApplicationModal({ isOpen, onClose, initialDomain = 'tec
                     onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-200 focus:border-[#20A2B1] rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none transition-colors font-medium"
                   >
-                    <option value="1st Year">1st Year (Freshman)</option>
-                    <option value="2nd Year">2nd Year (Sophomore)</option>
-                    <option value="3rd Year">3rd Year (Junior)</option>
-                    <option value="4th Year">4th Year (Senior)</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
                   </select>
                 </div>
               </div>
@@ -365,24 +364,10 @@ export default function ApplicationModal({ isOpen, onClose, initialDomain = 'tec
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
-            <div className="space-y-2">
+            <div>
               <h3 className="text-2xl sm:text-3xl font-extrabold font-['Outfit'] text-[#173F5F]">
                 Application Received!
               </h3>
-              <p className="text-sm text-slate-600 max-w-md mx-auto">
-                Thank you for applying, <span className="text-[#173F5F] font-bold">{formData.fullName}</span>! We have sent a confirmation to <span className="text-[#20A2B1] font-semibold">{formData.email}</span>.
-              </p>
-              <p className="text-xs text-slate-500">
-                Our leads will review your application for the{' '}
-                <span className="text-[#173F5F] uppercase font-bold">{formData.domain}</span>
-                {formData.secondaryDomain && (
-                  <>
-                    {' '}and{' '}
-                    <span className="text-[#E6972B] uppercase font-bold">{formData.secondaryDomain}</span>
-                  </>
-                )}{' '}
-                track and contact you for the orientation session.
-              </p>
             </div>
 
             <div className="pt-4">
