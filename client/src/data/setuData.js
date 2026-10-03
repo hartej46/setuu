@@ -280,27 +280,11 @@ export const STORIES_GALLERY = [
   },
   {
     id: 4,
-    title: 'Product Design & Wireframing Jam',
-    category: 'Workshops',
-    date: 'Winter 2025',
-    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop',
-    desc: 'Designers prototyping clean user journeys to solve student booking navigation.',
-  },
-  {
-    id: 5,
-    title: 'Core Leads Roadmap & Project Review',
-    category: 'Team',
-    date: 'Autumn 2025',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop',
-    desc: 'Setting project milestones, evaluating student problem submissions, and planning club initiatives.',
-  },
-  {
-    id: 6,
-    title: 'Midnight Hackathon Problem-Solving Session',
+    title: 'Impact India Hackathon',
     category: 'Hackathons',
-    date: 'Spring 2026',
-    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800&auto=format&fit=crop',
-    desc: 'Late-night debugging session as teams race against the clock to deploy campus tech tools at BridgeHack.',
+    date: 'Hackathon',
+    image: null,
+    desc: 'We hosted the Impact India Hackathon—a high-energy celebration of innovation, creativity, and teamwork where participants turned technology into action.',
   },
 ];
 
